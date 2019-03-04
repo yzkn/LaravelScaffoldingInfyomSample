@@ -49,3 +49,26 @@ config/app.phpに以下のエイリアス(Aliases)を追加する
 'Flash'     => Laracasts\Flash\Flash::class,
 
 ```
+
+以下のコマンドを実行する
+
+```powershell
+$ php artisan vendor:publish
+```
+
+app\Providers\RouteServiceProvider.phpのmapApiRoutes関数の中身を以下に変更する
+
+```php
+Route::prefix('api')
+    ->middleware('api')
+    ->as('api.')
+    ->namespace($this->namespace."\\API")
+    ->group(base_path('routes/api.php'));
+
+```
+
+以下のコマンドを実行する
+
+```powershell
+$ php artisan infyom:publish
+```
