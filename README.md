@@ -72,3 +72,9 @@ Route::prefix('api')
 ```powershell
 $ php artisan infyom:publish
 ```
+
+```powershell
+$ php artisan infyom.publish:layout
+```
+
+
