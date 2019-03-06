@@ -6,6 +6,28 @@ LaravelScaffoldingInfyOmSample
 ```powershell
 $ laravel new LaravelScaffoldingInfyOmSample
 $ cd LaravelScaffoldingInfyOmSample
+
+```
+
+Laravel5.4以上、MySQL5.7.7未満の場合はapp\Providers\AppServiceProvider.phpを以下のように変更する
+
+```php
+use Illuminate\Support\Facades\Schema;
+```
+
+```php
+    public function boot()
+    {
+        Schema::defaultStringLength(191);
+    }
+```
+
+認証を有効化する
+
+```powershell
+$ php artisan make:auth
+$ php artisan migrate
+
 ```
 
 2. InfyOm Laravel Generatorのインストール
@@ -77,4 +99,31 @@ $ php artisan infyom:publish
 $ php artisan infyom.publish:layout
 ```
 
+3. InfyOm Laravel Generatorコマンドの実行
 
+※Soft Delete(論理削除)について
+
+デフォルトで論理削除が有効化されているので、必要に応じてconfig/infyom/laravel_generator.phpの以下の項目を編集して無効化する。論理削除を使用する場合はテーブルにdeletd_atカラムが存在することを確認しておく
+
+```php
+'options' => 'softDelete' => true
+```
+
+スキャフォールディングを実行する
+
+```powershell
+# $ php artisan infyom:scaffold $MODEL_NAME --fromTable --tableName=$TABLE_NAME
+
+$ php artisan infyom:scaffold ItemType --fromTable --tableName=itemtype
+$ php artisan infyom:scaffold Item --fromTable --tableName=item
+```
+
+Item、ItemTypeモデルのそれぞれについて、idカラムのバリデーションを解除する
+(AUTO INCREMENTを設定しているため)
+
+```php
+    public static $rules = [
+        'id' => 'required', // ←この行を削除
+        ...
+    ];
+```

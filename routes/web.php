@@ -19,3 +19,10 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
+
+Route::resource('itemTypes', 'ItemTypeController');
+
+Route::resource('items', 'ItemController');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
